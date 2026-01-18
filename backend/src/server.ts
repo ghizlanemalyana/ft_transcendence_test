@@ -14,6 +14,20 @@ fastify.get('/db-test', async () => {
     result,
   };
 });
+fastify.get('/add-message', async () => {
+  const newMessage = await prisma.message.create({
+    data: {
+      content: "Hello from the debug session!",
+      sender: {
+        create: { username: "Tester", email: "test@test.com" }
+      },
+      conversation: {
+        create: { name: "Debug Chat" }
+      }
+    }
+  });
+  return { message: 'Message added to DB! ✅', data: newMessage };
+});
 
 const start = async () => {
   try {
