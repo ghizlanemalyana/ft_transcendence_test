@@ -1,16 +1,17 @@
-datasource db {
-  provider = "postgresql"
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider = "postgresql"
+ 
+}
+
 model User {
-  id       Int     @id @default(autoincrement())
-  username String  @unique
-  email    String? @unique
-  password String?
+  id        Int     @id @default(autoincrement())
+  username  String  @unique
+  email     String? @unique
+  password  String?
 
   messages     Message[]
   participants Participant[]
@@ -19,9 +20,11 @@ model User {
 }
 
 model Conversation {
-  id   Int              @id @default(autoincrement())
-  name String?
-  type ConversationType @default(DIRECT)
+  id        Int              @id @default(autoincrement())
+  name      String?
+  type      ConversationType
+  isPublic  Boolean          @default(true)
+  password  String?          // hashed (for protected channels)
 
   messages     Message[]
   participants Participant[]
@@ -30,7 +33,7 @@ model Conversation {
 }
 
 model Message {
-  id             Int    @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
   content        String
   senderId       Int
   conversationId Int
@@ -46,9 +49,9 @@ model Participant {
   userId         Int
   conversationId Int
 
-  role   ParticipantRole @default(MEMBER)
-  muted  Boolean         @default(false)
-  banned Boolean         @default(false)
+  role    ParticipantRole @default(MEMBER)
+  muted   Boolean         @default(false)
+  banned  Boolean         @default(false)
 
   user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
@@ -57,8 +60,8 @@ model Participant {
 }
 
 enum ConversationType {
-  DIRECT
-  GROUP
+  DIRECT    // DM
+  GROUP     // Public / private / protected channel
 }
 
 enum ParticipantRole {
@@ -66,3 +69,4 @@ enum ParticipantRole {
   ADMIN
   MEMBER
 }
+

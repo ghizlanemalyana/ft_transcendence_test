@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "tsx src/server.ts",
     "build": "next build",
     "start": "next start",
     "db:generate": "prisma generate",
@@ -13,26 +13,21 @@
     "test:db": "tsx scripts/test-db.ts"
   },
   "dependencies": {
-    "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
-    "@types/pg": "^8.16.0",
+    "bcryptjs": "^3.0.3",
     "fastify": "5.6.2",
     "next": "16.0.10",
-    "pg": "^8.17.1",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
     "@types/uuid": "^10.0.0",
-    "esbuild": "0.21.5",
-    "esbuild-wasm": "0.21.5",
     "prisma": "7.2.0",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.0"
-  },
-  "overrides": {
-    "esbuild": "$esbuild-wasm"
+    "typescript": "^5.9.3"
   }
 }
